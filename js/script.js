@@ -57,4 +57,3 @@ function displayBooks() {
         libraryContainer.appendChild(newBookCard);
     })
 }
-
