@@ -39,7 +39,9 @@ main h2 {
     margin-bottom: 24px;
 }
 
-#add-book-button {
+#add-book-button,
+.addBookFormButton
+{
     border: none;
     background: white;
     color: black;
@@ -96,12 +98,13 @@ main h2 {
     gap: 24px;
 }
 
-#read {
-    transform: scale(2);
+#read,
+#hasBeenRead {
     cursor: pointer;
 }
 
-#delete-button {
+#delete-button,
+.cancelDialog {
     border: none;
     background: red;
     color: white;
@@ -110,6 +113,70 @@ main h2 {
     font-weight: bold;
     border-radius: 48px;
     cursor: pointer;
+}
+
+dialog {
+    margin: auto;
+    background: black;
+    color: white;
+    padding: 36px;
+    border-radius: 48px;
+    border: none;
+}
+
+::backdrop {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+form {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    gap: 24px;
+}
+
+.titleLabel {
+    grid-row: 1 / 2;
+    grid-column: 1 / 2;
+    align-self: center;
+}
+
+.authorLabel {
+    grid-row: 2 / 3;
+    grid-column: 1 / 2;
+    align-self: center;
+}
+
+#title {
+    grid-row: 1 / 2;
+    grid-column: 2 / 3;
+}
+
+#author {
+    grid-row: 2 / 3;
+    grid-column: 2 / 3;
+}
+
+#author,
+#title {
+    border-radius: 16px;
+    padding: 12px;
+}
+
+.readLabel {
+    align-self: center;
+}
+
+#hasBeenRead {
+    justify-self: flex-start;
+}
+
+.buttonContainer {
+    grid-column: 1 / 3;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 

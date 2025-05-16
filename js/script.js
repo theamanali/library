@@ -1,4 +1,11 @@
+const body = document.querySelector('body');
 const libraryContainer = document.querySelector('.library-container');
+const mainAddButton = document.querySelector('.addBookMain');
+const addBookDialog = document.querySelector('#add-book-dialog');
+const dialogCancelButton = document.querySelector('.cancelDialog');
+const dialogSubmitButton = document.querySelector('.addBookFormButton');
+const form = document.querySelector('form');
+
 const myLibrary = [];
 
 function Book(title, author, beenRead) {
@@ -18,6 +25,8 @@ function displayBooks() {
         return;
     }
     
+    libraryContainer.replaceChildren();
+
     myLibrary.forEach((book) => {
         // create all HTML elements
         const newBookCard = document.createElement('div');
@@ -28,7 +37,7 @@ function displayBooks() {
         const readLabel = document.createElement('label');
         const readButton = document.createElement('input');
         const deleteButton = document.createElement('button');
-        
+
         // add values and styles to elements
         newBookCard.classList.add('book-card');
         newBookContent.classList.add('book-content');
@@ -45,7 +54,7 @@ function displayBooks() {
         deleteButton.setAttribute("type", "button");
         deleteButton.setAttribute("id", "delete-button");
         deleteButton.textContent = "Delete";
-        
+
         // put elements in order
         readLabel.appendChild(readButton);
         newBookContent.appendChild(title);
@@ -54,6 +63,40 @@ function displayBooks() {
         buttonContainer.appendChild(deleteButton);
         newBookCard.appendChild(newBookContent);
         newBookCard.appendChild(buttonContainer);
-        libraryContainer.appendChild(newBookCard);
+        libraryContainer.prepend(newBookCard);
     })
 }
+
+mainAddButton.addEventListener('click', (e) => {
+    addBookDialog.showModal();
+})
+dialogCancelButton.addEventListener('click', (e) => {
+    addBookDialog.close();
+})
+dialogSubmitButton.addEventListener('click', (e) => {
+    e.preventDefault()
+    const title = form.elements['title'].value;
+    const author = form.elements['author'].value;
+    const hasBeenRead = form.elements['hasBeenRead'].checked;
+
+    if(hasValidFormInput(title, author)) {
+        addBookToLibrary(title, author, hasBeenRead);
+        displayBooks()
+        clearForm()
+        addBookDialog.close();
+    }
+    else {
+        alert("Please enter a book title and author!")
+    }
+})
+
+function hasValidFormInput(title, author) {
+    return title.trim().length > 0 && author.trim().length > 0;
+}
+
+function clearForm() {
+    form.elements['title'].value = "";
+    form.elements['author'].value = "";
+    form.elements['hasBeenRead'].checked = false;
+}
+
