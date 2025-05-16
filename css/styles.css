@@ -51,13 +51,15 @@ main h2 {
 
 .library-container {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    grid-auto-rows: 1fr;
     gap: 36px;
 }
 
 .book-card {
     background: black;
-    border-radius: 24px;
+    border-radius: 36px;
     color: white;
     padding: 24px;
 
@@ -107,7 +109,6 @@ main h2 {
     font-weight: bold;
     border-radius: 48px;
     cursor: pointer;
-
 }
 
 
