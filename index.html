@@ -3,11 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My website</title>
+  <title>Library</title>
   <link rel="stylesheet" href="css/styles.css">
   <script src="js/script.js" defer></script>
 </head>
 <body>
-
+<header>
+    <h1>Library</h1>
+    <button id="add-book-button" type="button">Add book</button>
+</header>
+<main>
+    <h2>Your Books: </h2>
+    <div class="library-container">
+        <div class="book-card">
+            <div class="book-content">
+                <h3>Title</h3>
+                <p>Author</p>
+            </div>
+            <div class="button-container">
+                <label for="read">
+                    <input type="checkbox" name="read" id="read">
+                </label>
+                <button type="button" id="delete-button">Delete</button>
+            </div>
+        </div>
+    </div>
+</main>
 </body>
 </html>

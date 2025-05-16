@@ -5,6 +5,7 @@ function Book(title, author, pageNumber, beenRead) {
     this.author = author;
     this.pageNumber = pageNumber;
     this.beenRead = beenRead;
+    this.id = crypto.randomUUID()
 }
 
 function addBookToLibrary(title, author, pageNumber, beenRead) {
