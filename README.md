@@ -7,7 +7,7 @@ handling, dynamic card rendering, and a modal form for input.
 ## 🚀 Try it out
 
 ![Library App Screenshot](./img/demo-screenshot.png)
-
+[🔗 View Live](https://theamanali.github.io/library)
 ## ✨ Features
 
 - Add new books via a modal dialog (title, author, “have you read it?”, unique ID)
