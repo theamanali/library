@@ -24,21 +24,13 @@ function addBookToLibrary(title, author, beenRead) {
     myLibrary.push(new Book(title, author, beenRead));
 }
 
-function hideNoBooksText() {
-    noBooksText.hidden = true;
-}
-
-function showNoBooksText() {
-    noBooksText.hidden = false;
-}
-
 function removeBookFromLibrary(id) {
     for (let i = 0; i < myLibrary.length; i++) {
         if (myLibrary[i].id === id) {
             myLibrary.splice(i, 1);
         }
     }
-    
+
     if (myLibrary.length === 0) {
         showNoBooksText();
     }
@@ -50,8 +42,14 @@ function markRead(id) {
             myLibrary[i].toggleRead();
         }
     }
-    
-    console.log(myLibrary);
+}
+
+function hideNoBooksText() {
+    noBooksText.hidden = true;
+}
+
+function showNoBooksText() {
+    noBooksText.hidden = false;
 }
 
 function deleteBook(id) {
@@ -110,6 +108,16 @@ function displayNewBook(book) {
     mainDeleteButtons = document.querySelectorAll('#delete-button');
 }
 
+function hasValidFormInput(title, author) {
+    return title.trim().length > 0 && author.trim().length > 0;
+}
+
+function clearForm() {
+    form.elements['title'].value = "";
+    form.elements['author'].value = "";
+    form.elements['hasBeenRead'].checked = false;
+}
+
 document.body.addEventListener('click', (e) => {
     let bookId;
     
@@ -131,6 +139,7 @@ mainAddButton.addEventListener('click', () => {
 dialogCancelButton.addEventListener('click', () => {
     addBookDialog.close();
 })
+
 dialogSubmitButton.addEventListener('click', (e) => {
     e.preventDefault()
     const title = form.elements['title'].value;
@@ -147,14 +156,4 @@ dialogSubmitButton.addEventListener('click', (e) => {
         alert("Please enter a book title and author!")
     }
 })
-
-function hasValidFormInput(title, author) {
-    return title.trim().length > 0 && author.trim().length > 0;
-}
-
-function clearForm() {
-    form.elements['title'].value = "";
-    form.elements['author'].value = "";
-    form.elements['hasBeenRead'].checked = false;
-}
 
