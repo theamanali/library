@@ -1,3 +1,4 @@
+const noBooksText = document.querySelector('.no-books-text');
 const libraryContainer = document.querySelector('.library-container');
 const mainAddButton = document.querySelector('.addBookMain');
 let mainDeleteButtons = document.querySelectorAll('#delete-button');
@@ -23,11 +24,23 @@ function addBookToLibrary(title, author, beenRead) {
     myLibrary.push(new Book(title, author, beenRead));
 }
 
+function hideNoBooksText() {
+    noBooksText.hidden = true;
+}
+
+function showNoBooksText() {
+    noBooksText.hidden = false;
+}
+
 function removeBookFromLibrary(id) {
     for (let i = 0; i < myLibrary.length; i++) {
         if (myLibrary[i].id === id) {
             myLibrary.splice(i, 1);
         }
+    }
+    
+    if (myLibrary.length === 0) {
+        showNoBooksText();
     }
 }
 
@@ -56,6 +69,8 @@ function displayNewBook(book) {
         return;
     }
 
+    hideNoBooksText();
+    
     const newBookCard = document.createElement('div');
     const newBookContent = document.createElement('div');
     const title = document.createElement('h3');
