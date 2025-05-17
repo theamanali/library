@@ -1,6 +1,6 @@
-const body = document.querySelector('body');
 const libraryContainer = document.querySelector('.library-container');
 const mainAddButton = document.querySelector('.addBookMain');
+let mainDeleteButtons = document.querySelectorAll('#delete-button');
 const addBookDialog = document.querySelector('#add-book-dialog');
 const dialogCancelButton = document.querySelector('.cancelDialog');
 const dialogSubmitButton = document.querySelector('.addBookFormButton');
@@ -16,8 +16,25 @@ function Book(title, author, beenRead) {
 }
 
 function addBookToLibrary(title, author, beenRead) {
-    const newBook = new Book(title, author, beenRead);
-    myLibrary.push(newBook);
+    myLibrary.push(new Book(title, author, beenRead));
+}
+
+function removeBookFromLibrary(id) {
+    for (let i = 0; i < myLibrary.length; i++) {
+        if (myLibrary[i].id === id) {
+            myLibrary.splice(i, 1);
+        }
+    }
+}
+
+function deleteBook(id) {
+    const bookCards = document.querySelectorAll('.book-card');
+    for (let i = 0; i < bookCards.length; i++) {
+        if (bookCards[i].dataset.id === id) {
+            libraryContainer.removeChild(bookCards[i]);
+            return;
+        }
+    }
 }
 
 function displayNewBook(book) {
@@ -61,7 +78,16 @@ function displayNewBook(book) {
     newBookCard.appendChild(newBookContent);
     newBookCard.appendChild(buttonContainer);
     libraryContainer.prepend(newBookCard);
+    mainDeleteButtons = document.querySelectorAll('#delete-button');
 }
+
+document.body.addEventListener('click', (e) => {
+    if (e.target.matches('#delete-button')) {
+        let bookId = e.target.parentElement.parentElement.dataset.id;
+        deleteBook(bookId);
+        removeBookFromLibrary(bookId);
+    }
+});
 
 mainAddButton.addEventListener('click', (e) => {
     addBookDialog.showModal();
