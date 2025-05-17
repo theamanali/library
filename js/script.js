@@ -20,56 +20,53 @@ function addBookToLibrary(title, author, beenRead) {
     myLibrary.push(newBook);
 }
 
-function displayBooks() {
+function displayNewBook(book) {
     if (myLibrary.length === 0) {
         return;
     }
-    
-    libraryContainer.replaceChildren();
 
-    myLibrary.forEach((book) => {
-        // create all HTML elements
-        const newBookCard = document.createElement('div');
-        const newBookContent = document.createElement('div');
-        const title = document.createElement('h3');
-        const author = document.createElement('p');
-        const buttonContainer = document.createElement('div');
-        const readLabel = document.createElement('label');
-        const readButton = document.createElement('input');
-        const deleteButton = document.createElement('button');
+    const newBookCard = document.createElement('div');
+    const newBookContent = document.createElement('div');
+    const title = document.createElement('h3');
+    const author = document.createElement('p');
+    const buttonContainer = document.createElement('div');
+    const readLabel = document.createElement('label');
+    const readButton = document.createElement('input');
+    const deleteButton = document.createElement('button');
 
-        // add values and styles to elements
-        newBookCard.classList.add('book-card');
-        newBookContent.classList.add('book-content');
-        title.textContent = book.title;
-        author.textContent = book.author;
-        buttonContainer.classList.add('button-container');
-        readLabel.setAttribute('for', 'read');
-        readButton.setAttribute('type', 'checkbox');
-        readButton.setAttribute("name", "read")
-        readButton.setAttribute("id", "read");
-        if (book.hasBeenRead) {
-            readButton.checked = true;
-        }
-        deleteButton.setAttribute("type", "button");
-        deleteButton.setAttribute("id", "delete-button");
-        deleteButton.textContent = "Delete";
+    // add values and styles to elements
+    newBookCard.classList.add('book-card');
+    newBookCard.setAttribute('data-id', book.id);
+    newBookContent.classList.add('book-content');
+    title.textContent = book.title;
+    author.textContent = book.author;
+    buttonContainer.classList.add('button-container');
+    readLabel.setAttribute('for', 'read');
+    readButton.setAttribute('type', 'checkbox');
+    readButton.setAttribute("name", "read")
+    readButton.setAttribute("id", "read");
+    if (book.hasBeenRead) {
+        readButton.checked = true;
+    }
+    deleteButton.setAttribute("type", "button");
+    deleteButton.setAttribute("id", "delete-button");
+    deleteButton.textContent = "Delete";
 
-        // put elements in order
-        readLabel.appendChild(readButton);
-        newBookContent.appendChild(title);
-        newBookContent.appendChild(author);
-        buttonContainer.appendChild(readLabel);
-        buttonContainer.appendChild(deleteButton);
-        newBookCard.appendChild(newBookContent);
-        newBookCard.appendChild(buttonContainer);
-        libraryContainer.prepend(newBookCard);
-    })
+    // put elements in order
+    readLabel.appendChild(readButton);
+    newBookContent.appendChild(title);
+    newBookContent.appendChild(author);
+    buttonContainer.appendChild(readLabel);
+    buttonContainer.appendChild(deleteButton);
+    newBookCard.appendChild(newBookContent);
+    newBookCard.appendChild(buttonContainer);
+    libraryContainer.prepend(newBookCard);
 }
 
 mainAddButton.addEventListener('click', (e) => {
     addBookDialog.showModal();
 })
+
 dialogCancelButton.addEventListener('click', (e) => {
     addBookDialog.close();
 })
@@ -81,7 +78,7 @@ dialogSubmitButton.addEventListener('click', (e) => {
 
     if(hasValidFormInput(title, author)) {
         addBookToLibrary(title, author, hasBeenRead);
-        displayBooks()
+        displayNewBook(myLibrary[myLibrary.length - 1]);
         clearForm()
         addBookDialog.close();
     }
