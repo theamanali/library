@@ -13,6 +13,10 @@ function Book(title, author, beenRead) {
     this.author = author;
     this.hasBeenRead = beenRead;
     this.id = crypto.randomUUID()
+    
+    this.toggleRead = function() {
+        this.hasBeenRead = !this.hasBeenRead;
+    }
 }
 
 function addBookToLibrary(title, author, beenRead) {
@@ -25,6 +29,16 @@ function removeBookFromLibrary(id) {
             myLibrary.splice(i, 1);
         }
     }
+}
+
+function markRead(id) {
+    for (let i = 0; i < myLibrary.length; i++) {
+        if (myLibrary[i].id === id) {
+            myLibrary[i].toggleRead();
+        }
+    }
+    
+    console.log(myLibrary);
 }
 
 function deleteBook(id) {
@@ -82,18 +96,24 @@ function displayNewBook(book) {
 }
 
 document.body.addEventListener('click', (e) => {
+    let bookId;
+    
     if (e.target.matches('#delete-button')) {
-        let bookId = e.target.parentElement.parentElement.dataset.id;
+        bookId = e.target.parentElement.parentElement.dataset.id;
         deleteBook(bookId);
         removeBookFromLibrary(bookId);
     }
+    else if (e.target.matches('#read')) {
+        bookId = e.target.parentElement.parentElement.parentElement.dataset.id;
+        markRead(bookId);
+    }
 });
 
-mainAddButton.addEventListener('click', (e) => {
+mainAddButton.addEventListener('click', () => {
     addBookDialog.showModal();
 })
 
-dialogCancelButton.addEventListener('click', (e) => {
+dialogCancelButton.addEventListener('click', () => {
     addBookDialog.close();
 })
 dialogSubmitButton.addEventListener('click', (e) => {
