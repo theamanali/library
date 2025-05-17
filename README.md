@@ -1,6 +1,8 @@
 # Library 📚
 
-A browser-based Library app built with HTML, CSS, and JavaScript as part of a JavaScript course. Implements a custom `Book` constructor, object-oriented data handling, dynamic card rendering, and a modal form for input.
+A browser-based Library app built with HTML, CSS, and JavaScript as part of 
+The Odin Project. Implements a custom `Book` constructor, object-oriented data 
+handling, dynamic card rendering, and a modal form for input.
 
 ## 🚀 Try it out
 
