@@ -7,42 +7,55 @@ const dialogCancelButton = document.querySelector('.cancelDialog');
 const dialogSubmitButton = document.querySelector('.addBookFormButton');
 const form = document.querySelector('form');
 
-const myLibrary = [];
+class Library {
+    libraryArray;
 
-function Book(title, author, beenRead) {
-    this.title = title;
-    this.author = author;
-    this.hasBeenRead = beenRead;
-    this.id = crypto.randomUUID()
-    
-    this.toggleRead = function() {
-        this.hasBeenRead = !this.hasBeenRead;
+    constructor() {
+        this.libraryArray = []
     }
-}
 
-function addBookToLibrary(title, author, beenRead) {
-    myLibrary.push(new Book(title, author, beenRead));
-}
+    get libraryArray() {
+        return this.libraryArray;
+    }
 
-function removeBookFromLibrary(id) {
-    for (let i = 0; i < myLibrary.length; i++) {
-        if (myLibrary[i].id === id) {
-            myLibrary.splice(i, 1);
+    addBookToLibrary(title, author, beenRead) {
+        this.libraryArray.push(new Book(title, author, beenRead));
+    }
+
+    removeBookFromLibrary(id) {
+        for (let i = 0; i < this.libraryArray.length; i++) {
+            if (this.libraryArray[i].id === id) {
+                this.libraryArray.splice(i, 1);
+            }
+        }
+
+        if (this.libraryArray.length === 0) {
+            showNoBooksText();
         }
     }
 
-    if (myLibrary.length === 0) {
-        showNoBooksText();
-    }
-}
-
-function markRead(id) {
-    for (let i = 0; i < myLibrary.length; i++) {
-        if (myLibrary[i].id === id) {
-            myLibrary[i].toggleRead();
+    markRead(id) {
+        for (let i = 0; i < this.libraryArray.length; i++) {
+            if (this.libraryArray[i].id === id) {
+                this.libraryArray[i].toggleRead();
+            }
         }
     }
 }
+
+class Book {
+    constructor(title, author, beenRead) {
+        this.title = title;
+        this.author = author;
+        this.beenRead = beenRead;
+    }
+
+    toggleRead() {
+        this.beenRead = !this.beenRead;
+    }
+}
+
+const myLibrary = new Library();
 
 function hideNoBooksText() {
     noBooksText.hidden = true;
@@ -63,7 +76,7 @@ function deleteBook(id) {
 }
 
 function displayNewBook(book) {
-    if (myLibrary.length === 0) {
+    if (myLibrary.libraryArray.length === 0) {
         return;
     }
 
@@ -124,11 +137,11 @@ document.body.addEventListener('click', (e) => {
     if (e.target.matches('#delete-button')) {
         bookId = e.target.parentElement.parentElement.dataset.id;
         deleteBook(bookId);
-        removeBookFromLibrary(bookId);
+        myLibrary.removeBookFromLibrary(bookId);
     }
     else if (e.target.matches('#read')) {
         bookId = e.target.parentElement.parentElement.parentElement.dataset.id;
-        markRead(bookId);
+        myLibrary.markRead(bookId);
     }
 });
 
@@ -147,8 +160,8 @@ dialogSubmitButton.addEventListener('click', (e) => {
     const hasBeenRead = form.elements['hasBeenRead'].checked;
 
     if(hasValidFormInput(title, author)) {
-        addBookToLibrary(title, author, hasBeenRead);
-        displayNewBook(myLibrary[myLibrary.length - 1]);
+        myLibrary.addBookToLibrary(title, author, hasBeenRead);
+        displayNewBook(myLibrary.libraryArray[myLibrary.libraryArray.length - 1]);
         clearForm()
         addBookDialog.close();
     }
