@@ -107,10 +107,6 @@ function FormController() {
     this.resetForm = () => {
         this.form.reset();
     }
-
-    this.hasValidInput = (bookData) => {
-        return bookData.title.length > 0 && bookData.author.length > 0 && bookData.pages > 0;
-    }
 }
 
 const addBookButton = document.getElementById("add-book-button");
