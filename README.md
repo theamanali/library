@@ -33,7 +33,7 @@ library-2/
 1. Clone the repo:
 
 ```bash
-git clone https://github.com/<your-username>/library-2.git
+git clone https://github.com/theamanali/library-2.git
 cd library-2
 ```
 
