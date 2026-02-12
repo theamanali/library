@@ -135,17 +135,12 @@ formController.form.addEventListener("submit", (e) => {
 
     const bookData = formController.getBookData();
 
-    if (formController.hasValidInput(bookData)) {
-        const newBook = new Book(bookData.title, bookData.author, bookData.pages, bookData.wasRead);
-        myLibrary.addBook(newBook);
-        displayController.displayNewBook(newBook);
-        displayController.hideNoBooksText();
-        addBookDialog.close();
-        formController.resetForm();
-    }
-    else {
-        alert("Please enter a valid title, author, and page count.");
-    }
+    const newBook = new Book(bookData.title, bookData.author, bookData.pages, bookData.wasRead);
+    myLibrary.addBook(newBook);
+    displayController.displayNewBook(newBook);
+    displayController.hideNoBooksText();
+    addBookDialog.close();
+    formController.resetForm();
 })
 
 
