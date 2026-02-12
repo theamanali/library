@@ -153,14 +153,13 @@ document.body.addEventListener("click", (e) => {
     let bookID;
 
     if (e.target.matches(".delete-button")) {
-        bookID = e.target.parentElement.parentElement.dataset.id
+        bookID = e.target.closest(".book-card")?.dataset.id
 
         displayController.hideBook(bookID)
         myLibrary.removeBook(bookID)
     }
     else if (e.target.matches(".read-button")) {
-        bookID = e.target.parentElement.parentElement.parentElement.dataset.id
-
+        bookID = e.target.closest(".book-card")?.dataset.id
         myLibrary.getBook(bookID).markRead();
     }
 });
