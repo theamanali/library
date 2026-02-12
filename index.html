@@ -18,9 +18,27 @@
             <p>Oh, no! You have no books :(</p>
             <p>Try adding one in the top right</p>
         </div>
-        <div class="library-container">
+        <div class="books-container">
 
         </div>
+
+        <dialog id="add-book-dialog">
+            <form id="add-book-form">
+                <label for="title" class="titleLabel">Title:</label>
+                <input type="text" name="title" id="title" required>
+                <label for="author" class="authorLabel">Author:</label>
+                <input type="text" name="author" id="author" required>
+                <label for="pages" class="pagesLabel">Pages:</label>
+                <input type="number" name="pages" id="pages" required>
+                <label for="wasRead" class="readLabel">Read:</label>
+                <input type="checkbox" name="wasRead" id="wasRead">
+
+                <div class="buttonContainer">
+                    <button type="button" class="cancelDialog">Cancel</button>
+                    <button type="submit" class="addBookFormButton">Add book</button>
+                </div>
+            </form>
+        </dialog>
     </main>
 </body>
 </html>

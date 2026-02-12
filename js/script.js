@@ -9,8 +9,13 @@ function Library () {
         this.books.push(book);
     }
 
-    this.removeBook = function (index) {
-        this.books.splice(index, 1);
+    this.removeBook = function (id) {
+        for (let i = 0; i < this.books.length; i++) {
+            if (this.books[i].id === id) {
+                this.books.splice(i, 1);
+                break;
+            }
+        }
     }
 }
 
@@ -23,6 +28,7 @@ function Book(title, author, pages, wasRead) {
     this.author = author;
     this.pages = pages;
     this.wasRead = wasRead;
+    this.id = crypto.randomUUID();
 
     this.markRead = function () {
         this.wasRead = !this.wasRead;
@@ -30,8 +36,143 @@ function Book(title, author, pages, wasRead) {
 }
 
 function DisplayController() {
+    this.noBooksText = document.querySelector(".no-books-text");
+    this.booksContainer = document.querySelector(".books-container");
 
+    this.showNoBooksText = () => {
+        this.noBooksText.hidden = false;
+    }
+
+    this.hideNoBooksText = () => {
+        this.noBooksText.hidden = true;
+    }
+
+    this.displayNewBook = (book) => {
+        const newBookCard = document.createElement('div');
+        const newBookContent = document.createElement('div');
+        const title = document.createElement('h3');
+        const author = document.createElement('p');
+        const pages = document.createElement('p');
+        const buttonContainer = document.createElement('div');
+        const readLabel = document.createElement('label');
+        const readButton = document.createElement('input');
+        const deleteButton = document.createElement('button');
+
+        // add values and styles to elements
+        newBookCard.classList.add('book-card');
+        newBookCard.setAttribute('data-id', book.id);
+        newBookContent.classList.add('book-content');
+        title.textContent = book.title;
+        author.textContent = book.author;
+        pages.textContent = book.pages + " pages";
+        buttonContainer.classList.add('button-container');
+        readLabel.setAttribute('for', 'read');
+        readButton.setAttribute('type', 'checkbox');
+        readButton.setAttribute("name", "read")
+        readButton.setAttribute("id", "read");
+        if (book.wasRead) {
+            readButton.checked = true;
+        }
+        deleteButton.setAttribute("type", "button");
+        deleteButton.setAttribute("id", "delete-button");
+        deleteButton.textContent = "Delete";
+
+        // put elements in order
+        readLabel.appendChild(readButton);
+        newBookContent.appendChild(title);
+        newBookContent.appendChild(author);
+        newBookContent.appendChild(pages);
+        buttonContainer.appendChild(readLabel);
+        buttonContainer.appendChild(deleteButton);
+        newBookCard.appendChild(newBookContent);
+        newBookCard.appendChild(buttonContainer);
+        this.booksContainer.prepend(newBookCard);
+    }
 }
+
+function FormController() {
+    this.form = document.querySelector('form');
+
+    this.getBookTitle = () => {
+        return this.form.elements['title'].value;
+    }
+
+    this.getBookAuthor = () => {
+        return this.form.elements['author'].value;
+    }
+
+    this.getBookPages = () => {
+        return this.form.elements['pages'].value;
+    }
+
+    this.getWasRead = () => {
+        return this.form.elements['wasRead'].checked;
+    }
+
+    this.resetForm = () => {
+        this.form.elements['title'].value = '';
+        this.form.elements['author'].value = '';
+        this.form.elements['pages'].value = '';
+        this.form.elements['wasRead'].checked = false;
+    }
+
+    this.hasValidInput = () => {
+        const title = this.form.elements['title'].value.trim();
+        const author = this.form.elements['author'].value.trim();
+        const pages = Number(this.form.elements['pages'].value);
+
+        if (title.length > 0 && author.length > 0 && pages > 0) {
+            return true;
+        }
+    }
+}
+
+const addBookButton = document.getElementById("add-book-button");
+const addBookDialog = document.getElementById("add-book-dialog");
+const dialogCancelButton = document.querySelector('.cancelDialog');
+const dialogSubmitButton = document.querySelector('.addBookFormButton');
+
+const myLibrary = new Library();
+const formController = new FormController();
+const displayController = new DisplayController();
+
+addBookButton.addEventListener("click", () => {
+    addBookDialog.showModal();
+})
+
+dialogCancelButton.addEventListener('click', () => {
+    addBookDialog.close();
+    formController.resetForm();
+})
+
+dialogSubmitButton.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    const title = formController.getBookTitle();
+    const author = formController.getBookAuthor();
+    const pages = formController.getBookPages();
+    const wasRead = formController.getWasRead();
+
+    if (formController.hasValidInput()) {
+        const newBook = new Book(title, author, pages, wasRead);
+        myLibrary.addBook(newBook);
+        displayController.displayNewBook(newBook);
+        displayController.hideNoBooksText();
+        addBookDialog.close();
+        formController.resetForm();
+    }
+    else {
+        alert("Please enter a valid title, author, and page count.");
+    }
+})
+
+
+
+
+
+
+
+
 
 
 

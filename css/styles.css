@@ -53,7 +53,7 @@ main {
     flex: 1 1 auto;
     padding: 36px;
     display: flex;
-    align-items: center;
+    align-items: stretch;
     flex-direction: column;
 }
 
@@ -67,4 +67,149 @@ main h2 {
     text-align: center;
     font-size: 2rem;
     margin: auto;
+}
+
+#delete-button,
+.cancelDialog {
+    border: none;
+    background: red;
+    color: white;
+    padding: 12px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 48px;
+    cursor: pointer;
+}
+
+#delete-button:hover,
+.cancelDialog:hover {
+    transform: scale(1.1);
+}
+
+dialog {
+    margin: auto;
+    background: black;
+    color: white;
+    padding: 36px;
+    border-radius: 48px;
+    border: none;
+}
+
+form {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    gap: 24px
+}
+
+.titleLabel {
+    grid-row: 1 / 2;
+}
+
+.authorLabel {
+    grid-row: 2 / 3;
+}
+
+.pagesLabel {
+    grid-row: 3 / 4
+}
+
+.titleLabel,
+.authorLabel,
+.pagesLabel {
+    grid-column: 1 / 2;
+    align-self: center;
+}
+
+#title {
+    grid-row: 1 / 2;
+}
+
+#author {
+    grid-row: 2 / 3;
+}
+
+#pages {
+    grid-row: 3 / 4;
+}
+
+#author,
+#title,
+#pages {
+    grid-column: 2 / 3;
+    border-radius: 16px;
+    padding: 12px;
+}
+
+.readLabel {
+    align-self: center;
+}
+
+#wasRead {
+    justify-self: flex-start;
+}
+
+.buttonContainer {
+    grid-column: 1 / 3;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+::backdrop {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.books-container {
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    grid-auto-rows: 1fr;
+    gap: 48px;
+}
+
+.book-card {
+    background: black;
+    border-radius: 24px;
+    color: white;
+    padding: 24px;
+
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.book-card:hover {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    transform: scale(1.1);
+}
+
+.book-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.book-card h3 {
+    font-size: 1.5rem;
+}
+
+.book-card p {
+    font-size: 1.2rem;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+}
+
+#read {
+    cursor: pointer;
 }
