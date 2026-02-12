@@ -135,7 +135,8 @@ form {
 
 #author,
 #title,
-#pages {
+#pages,
+#wasRead {
     grid-column: 2 / 3;
     border-radius: 16px;
     padding: 12px;
@@ -143,10 +144,6 @@ form {
 
 .readLabel {
     align-self: center;
-}
-
-#wasRead {
-    justify-self: flex-start;
 }
 
 .buttonContainer {

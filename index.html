@@ -31,7 +31,10 @@
                 <label for="pages" class="pagesLabel">Pages:</label>
                 <input type="number" name="pages" id="pages" required>
                 <label for="wasRead" class="readLabel">Read:</label>
-                <input type="checkbox" name="wasRead" id="wasRead">
+                <select name="wasRead" id="wasRead">
+                    <option value="false">No</option>
+                    <option value="true">Yes</option>
+                </select>
 
                 <div class="buttonContainer">
                     <button type="button" class="cancelDialog">Cancel</button>

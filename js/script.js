@@ -91,46 +91,31 @@ function DisplayController() {
 }
 
 function FormController() {
-    this.form = document.querySelector('form');
+    this.form = document.getElementById("add-book-form");
 
-    this.getBookTitle = () => {
-        return this.form.elements['title'].value;
-    }
+    this.getBookData = () => {
+        const formData = new FormData(this.form);
 
-    this.getBookAuthor = () => {
-        return this.form.elements['author'].value;
-    }
-
-    this.getBookPages = () => {
-        return this.form.elements['pages'].value;
-    }
-
-    this.getWasRead = () => {
-        return this.form.elements['wasRead'].checked;
+        return {
+            title: String(formData.get("title") || "").trim(),
+            author: String(formData.get("author") || "").trim(),
+            pages: Number(formData.get("pages")),
+            wasRead: this.form.elements["wasRead"].value === "true"
+        };
     }
 
     this.resetForm = () => {
-        this.form.elements['title'].value = '';
-        this.form.elements['author'].value = '';
-        this.form.elements['pages'].value = '';
-        this.form.elements['wasRead'].checked = false;
+        this.form.reset();
     }
 
-    this.hasValidInput = () => {
-        const title = this.form.elements['title'].value.trim();
-        const author = this.form.elements['author'].value.trim();
-        const pages = Number(this.form.elements['pages'].value);
-
-        if (title.length > 0 && author.length > 0 && pages > 0) {
-            return true;
-        }
+    this.hasValidInput = (bookData) => {
+        return bookData.title.length > 0 && bookData.author.length > 0 && bookData.pages > 0;
     }
 }
 
 const addBookButton = document.getElementById("add-book-button");
 const addBookDialog = document.getElementById("add-book-dialog");
 const dialogCancelButton = document.querySelector('.cancelDialog');
-const dialogSubmitButton = document.querySelector('.addBookFormButton');
 
 const myLibrary = new Library();
 const formController = new FormController();
@@ -145,16 +130,13 @@ dialogCancelButton.addEventListener('click', () => {
     formController.resetForm();
 })
 
-dialogSubmitButton.addEventListener("click", (e) => {
+formController.form.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    const title = formController.getBookTitle();
-    const author = formController.getBookAuthor();
-    const pages = formController.getBookPages();
-    const wasRead = formController.getWasRead();
+    const bookData = formController.getBookData();
 
-    if (formController.hasValidInput()) {
-        const newBook = new Book(title, author, pages, wasRead);
+    if (formController.hasValidInput(bookData)) {
+        const newBook = new Book(bookData.title, bookData.author, bookData.pages, bookData.wasRead);
         myLibrary.addBook(newBook);
         displayController.displayNewBook(newBook);
         displayController.hideNoBooksText();
@@ -165,7 +147,6 @@ dialogSubmitButton.addEventListener("click", (e) => {
         alert("Please enter a valid title, author, and page count.");
     }
 })
-
 
 
 
