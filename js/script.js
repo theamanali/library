@@ -47,6 +47,21 @@ function DisplayController() {
         this.noBooksText.hidden = true;
     }
 
+    this.hideBook = (id) => {
+        const bookCards = document.querySelectorAll(`.book-card`);
+
+        if (bookCards.length === 1) {
+            this.showNoBooksText()
+        }
+
+        for (let i = 0; i < bookCards.length; i++) {
+            if (bookCards[i].dataset.id === id) {
+                this.booksContainer.removeChild(bookCards[i]);
+                return;
+            }
+        }
+    }
+
     this.displayNewBook = (book) => {
         const newBookCard = document.createElement('div');
         const newBookContent = document.createElement('div');
@@ -68,13 +83,13 @@ function DisplayController() {
         buttonContainer.classList.add('button-container');
         readLabel.setAttribute('for', 'read');
         readButton.setAttribute('type', 'checkbox');
-        readButton.setAttribute("name", "read")
-        readButton.setAttribute("id", "read");
+        readButton.setAttribute("name", "read");
+        readButton.classList.add('read-button');
         if (book.wasRead) {
             readButton.checked = true;
         }
         deleteButton.setAttribute("type", "button");
-        deleteButton.setAttribute("id", "delete-button");
+        deleteButton.classList.add('delete-button');
         deleteButton.textContent = "Delete";
 
         // put elements in order
@@ -125,6 +140,21 @@ dialogCancelButton.addEventListener('click', () => {
     addBookDialog.close();
     formController.resetForm();
 })
+
+document.body.addEventListener("click", (e) => {
+    let bookID;
+
+    if (e.target.matches(".delete-button")) {
+        bookID = e.target.parentElement.parentElement.dataset.id
+        displayController.hideBook(bookID)
+        myLibrary.removeBook(bookID)
+
+        console.log(myLibrary)
+    }
+    else if (e.target.matches(".read-button")) {
+
+    }
+});
 
 formController.form.addEventListener("submit", (e) => {
     e.preventDefault();
