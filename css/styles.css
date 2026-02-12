@@ -185,7 +185,7 @@ form {
 
 .book-card:hover {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
 
 .book-content {
@@ -196,6 +196,7 @@ form {
 
 .book-card h3 {
     font-size: 1.5rem;
+    font-style: italic;
 }
 
 .book-card p {

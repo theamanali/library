@@ -63,7 +63,7 @@ function DisplayController() {
         newBookCard.setAttribute('data-id', book.id);
         newBookContent.classList.add('book-content');
         title.textContent = book.title;
-        author.textContent = book.author;
+        author.textContent = "by " + book.author;
         pages.textContent = book.pages + " pages";
         buttonContainer.classList.add('button-container');
         readLabel.setAttribute('for', 'read');
