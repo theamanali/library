@@ -17,6 +17,14 @@ function Library () {
             }
         }
     }
+
+    this.getBook = function (id) {
+        for (let i = 0; i < this.books.length; i++) {
+            if (this.books[i].id === id) {
+                return this.books[i];
+            }
+        }
+    }
 }
 
 function Book(title, author, pages, wasRead) {
@@ -146,13 +154,14 @@ document.body.addEventListener("click", (e) => {
 
     if (e.target.matches(".delete-button")) {
         bookID = e.target.parentElement.parentElement.dataset.id
+
         displayController.hideBook(bookID)
         myLibrary.removeBook(bookID)
-
-        console.log(myLibrary)
     }
     else if (e.target.matches(".read-button")) {
+        bookID = e.target.parentElement.parentElement.parentElement.dataset.id
 
+        myLibrary.getBook(bookID).markRead();
     }
 });
 
