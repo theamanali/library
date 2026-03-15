@@ -46,7 +46,7 @@ class DisplayController {
     }
 
     toggleNoBooksText() {
-        this.noBooksText.hidden ? this.noBooksText.hidden = false : this.noBooksText.hidden = true;
+        this.noBooksText.hidden = !this.noBooksText.hidden;
     }
 
     hideBook(id) {
