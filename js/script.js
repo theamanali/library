@@ -1,15 +1,13 @@
-function Library () {
-    if (!new.target) {
-        throw Error("Use new");
+class Library {
+    constructor () {
+        this.books = [];
     }
 
-    this.books = [];
-
-    this.addBook = function (book) {
+    addBook(book) {
         this.books.push(book);
     }
 
-    this.removeBook = function (id) {
+    removeBook(id) {
         for (let i = 0; i < this.books.length; i++) {
             if (this.books[i].id === id) {
                 this.books.splice(i, 1);
@@ -18,7 +16,7 @@ function Library () {
         }
     }
 
-    this.getBook = function (id) {
+    getBook(id) {
         for (let i = 0; i < this.books.length; i++) {
             if (this.books[i].id === id) {
                 return this.books[i];
@@ -27,39 +25,35 @@ function Library () {
     }
 }
 
-function Book(title, author, pages, wasRead) {
-    if (!new.target) {
-        throw Error("Use new");
+class Book {
+    constructor(title, author, pages, wasRead) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.wasRead = wasRead;
+        this.id = crypto.randomUUID();
     }
 
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.wasRead = wasRead;
-    this.id = crypto.randomUUID();
-
-    this.markRead = function () {
+    markRead() {
         this.wasRead = !this.wasRead;
     }
 }
 
-function DisplayController() {
-    this.noBooksText = document.querySelector(".no-books-text");
-    this.booksContainer = document.querySelector(".books-container");
-
-    this.showNoBooksText = () => {
-        this.noBooksText.hidden = false;
+class DisplayController {
+    constructor() {
+        this.noBooksText = document.querySelector(".no-books-text");
+        this.booksContainer = document.querySelector(".books-container");
     }
 
-    this.hideNoBooksText = () => {
-        this.noBooksText.hidden = true;
+    toggleNoBooksText() {
+        this.noBooksText.hidden ? this.noBooksText.hidden = false : this.noBooksText.hidden = true;
     }
 
-    this.hideBook = (id) => {
+    hideBook(id) {
         const bookCards = document.querySelectorAll(`.book-card`);
 
         if (bookCards.length === 1) {
-            this.showNoBooksText()
+            this.toggleNoBooksText()
         }
 
         for (let i = 0; i < bookCards.length; i++) {
@@ -70,7 +64,13 @@ function DisplayController() {
         }
     }
 
-    this.displayNewBook = (book) => {
+    displayNewBook(book) {
+        const bookCards = document.querySelectorAll(`.book-card`);
+
+        if (bookCards.length === 0) {
+            this.toggleNoBooksText()
+        }
+
         const newBookCard = document.createElement('div');
         const newBookContent = document.createElement('div');
         const title = document.createElement('h3');
@@ -113,10 +113,12 @@ function DisplayController() {
     }
 }
 
-function FormController() {
-    this.form = document.getElementById("add-book-form");
+class FormController {
+    constructor() {
+        this.form = document.getElementById("add-book-form");
+    }
 
-    this.getBookData = () => {
+    getBookData() {
         const formData = new FormData(this.form);
 
         return {
@@ -127,7 +129,7 @@ function FormController() {
         };
     }
 
-    this.resetForm = () => {
+    resetForm() {
         this.form.reset();
     }
 }
@@ -172,7 +174,6 @@ formController.form.addEventListener("submit", (e) => {
     const newBook = new Book(bookData.title, bookData.author, bookData.pages, bookData.wasRead);
     myLibrary.addBook(newBook);
     displayController.displayNewBook(newBook);
-    displayController.hideNoBooksText();
     addBookDialog.close();
     formController.resetForm();
 })
