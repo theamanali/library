@@ -115,22 +115,26 @@ class DisplayController {
 
 class FormController {
     constructor() {
-        this.form = document.getElementById("add-book-form");
+        this._form = document.getElementById("add-book-form");
+    }
+
+    get form() {
+        return this._form;
     }
 
     getBookData() {
-        const formData = new FormData(this.form);
+        const formData = new FormData(this._form);
 
         return {
             title: String(formData.get("title") || "").trim(),
             author: String(formData.get("author") || "").trim(),
             pages: Number(formData.get("pages")),
-            wasRead: this.form.elements["wasRead"].value === "true"
+            wasRead: this._form.elements["wasRead"].value === "true"
         };
     }
 
     resetForm() {
-        this.form.reset();
+        this._form.reset();
     }
 }
 
